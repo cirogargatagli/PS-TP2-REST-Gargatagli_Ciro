@@ -8,5 +8,6 @@ namespace TP2.REST.Domain.Queries
         List<ResponseGetCliente> GetAllClientes(string nombre, string apellido, string dni);
 
         ResponseGetCliente GetByID(int clienteid);
+        bool ExisteDNI(string dni);
     }
 }

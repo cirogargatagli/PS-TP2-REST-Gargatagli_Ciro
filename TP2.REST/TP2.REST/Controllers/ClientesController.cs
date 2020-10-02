@@ -20,6 +20,8 @@ namespace TP2.REST.Presentation.Controllers
         {            
             try
             {
+                if (clienteService.ExisteDNI(cliente.DNI))
+                    return new JsonResult("Ya existe") { StatusCode = 400 };
                 return new JsonResult(clienteService.CreateCliente(cliente)) { StatusCode = 201 };
             }
             catch(Exception e)
