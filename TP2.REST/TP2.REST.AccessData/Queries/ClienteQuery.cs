@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TP2.REST.Domain.DTO;
+using TP2.REST.Domain.Entities;
 using TP2.REST.Domain.Queries;
 
 namespace TP2.REST.AccessData.Queries
@@ -39,6 +40,15 @@ namespace TP2.REST.AccessData.Queries
                 .Where("ClienteID", "=", clienteid)
                 .FirstOrDefault<ResponseGetCliente>();
             return cliente;
+        }
+
+        public bool ExisteDNI(string dni)
+        {
+            var db = new QueryFactory(connection, sqlKatacompiler);
+            var cliente = db.Query("Cliente")
+                .Where("DNI", dni)
+                .FirstOrDefault();
+            return (cliente == null ? false : true);                
         }
     }
 }

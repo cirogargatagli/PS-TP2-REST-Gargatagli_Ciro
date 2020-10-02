@@ -14,6 +14,7 @@ namespace TP2.REST.Application.Services
         List<ResponseGetCliente> GetClientes(string nombre, string apellido, string dni);
 
         ResponseGetCliente GetByID(int clienteid);
+        bool ExisteDNI(string dni);
     }
     public class ClienteService : IClienteService
     {
@@ -37,6 +38,11 @@ namespace TP2.REST.Application.Services
             };
             _repository.Add(entity);
             return new GenericCreatedResponseDTO { Entity = "Cliente", Id = entity.ClienteId.ToString() };
+        }
+
+        public bool ExisteDNI(string dni)
+        {
+            return _query.ExisteDNI(dni);
         }
 
         public ResponseGetCliente GetByID(int clienteid)

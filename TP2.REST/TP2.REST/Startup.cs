@@ -53,7 +53,6 @@ namespace TP2.REST
             services.AddTransient<IClienteService, ClienteService>();
             services.AddTransient<ILibroService, LibroService>();
             services.AddTransient<IAlquilerService, AlquilerService>();
-            services.AddTransient<IEstadoAlquilerService, EstadoAlquilerService>();
             services.AddTransient<IClienteQuery, ClienteQuery>();
             services.AddTransient<ILibroQuery, LibroQuery>();
             services.AddTransient<IAlquilerQuery, AlquilerQuery>();
