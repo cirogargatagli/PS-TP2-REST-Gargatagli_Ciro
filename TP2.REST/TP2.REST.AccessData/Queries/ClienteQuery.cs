@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TP2.REST.Domain.DTO;
-using TP2.REST.Domain.Entities;
 using TP2.REST.Domain.Queries;
 
 namespace TP2.REST.AccessData.Queries
@@ -26,20 +25,10 @@ namespace TP2.REST.AccessData.Queries
             var query = db.Query("Cliente")
                 .When(!string.IsNullOrWhiteSpace(nombre), q => q.WhereLike("Nombre", $"%{nombre}%"))
                 .When(!string.IsNullOrWhiteSpace(apellido), q => q.WhereLike("Apellido", $"%{apellido}%"))
-                .When(!string.IsNullOrWhiteSpace(dni), q => q.WhereLike("DNI", $"%{dni}%"));                
+                .When(!string.IsNullOrWhiteSpace(dni), q => q.WhereLike("DNI", $"%{dni}%"));
 
             var result = query.Get<ResponseGetCliente>();
             return result.ToList();
-        }
-
-        public ResponseGetCliente GetByID(int clienteid)
-        {
-            var db = new QueryFactory(connection, sqlKatacompiler);
-            var cliente = db.Query("Cliente")
-                .Select("Nombre","Apellido","Email" )
-                .Where("ClienteID", "=", clienteid)
-                .FirstOrDefault<ResponseGetCliente>();
-            return cliente;
         }
 
         public bool ExisteDNI(string dni)
@@ -48,7 +37,7 @@ namespace TP2.REST.AccessData.Queries
             var cliente = db.Query("Cliente")
                 .Where("DNI", dni)
                 .FirstOrDefault();
-            return (cliente == null ? false : true);                
+            return (cliente == null ? false : true);
         }
     }
 }

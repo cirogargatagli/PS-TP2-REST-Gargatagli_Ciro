@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TP2.REST.Domain.Entities
 {
-    public class Libro 
+    public class Libro
     {
         private string isbnId;
         private string titulo;

@@ -20,7 +20,7 @@ namespace TP2.REST.Domain.Entities
         public int ClienteID { get; set; }
         public Cliente Cliente { get => cliente; set => cliente = value; }
 
-        
+
         [Required]
         [Column(TypeName = "varchar(50)")]
         public string ISBN { get; set; }
@@ -32,7 +32,7 @@ namespace TP2.REST.Domain.Entities
         public EstadoAlquiler Estado { get => estado; set => estado = value; }
 
         public DateTime? FechaAlquiler { get => fechaAlquiler; set => fechaAlquiler = value; }
-        public DateTime? FechaReserva { get => fechaReserva; set => fechaReserva = value; } 
-        public DateTime? FechaDevolucion { get => fechaDevolucion; set => fechaDevolucion = value; }       
+        public DateTime? FechaReserva { get => fechaReserva; set => fechaReserva = value; }
+        public DateTime? FechaDevolucion { get => fechaDevolucion; set => fechaDevolucion = value; }
     }
 }

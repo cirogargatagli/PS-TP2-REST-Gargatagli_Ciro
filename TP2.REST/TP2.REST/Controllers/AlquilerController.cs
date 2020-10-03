@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using TP2.REST.Application.Services;
 using TP2.REST.Domain.DTO;
 
@@ -29,7 +29,7 @@ namespace TP2.REST.Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByEstado([FromQuery]int estadoid)
+        public IActionResult GetByEstado([FromQuery] int estadoid)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace TP2.REST.Presentation.Controllers
             }
         }
 
-        [HttpGet("cliente/{id}")]
+        [HttpGet("Cliente/{id}")]
         public IActionResult GetByCliente(int id)
         {
             try

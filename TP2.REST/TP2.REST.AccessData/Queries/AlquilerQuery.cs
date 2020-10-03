@@ -86,7 +86,7 @@ namespace TP2.REST.AccessData.Queries
                 .Get<Alquiler>()
                 .FirstOrDefault();
 
-            return new GenericModifyResponseDTO { Entity = "Alquiler", Id = alquiler.AlquilerId.ToString(), Estado = "Modificado" };            
+            return new GenericModifyResponseDTO { Entity = "Alquiler", Id = alquiler.AlquilerId.ToString(), Estado = "Modificado" };
         }
 
         public void ModifyStock(string isbn)
@@ -99,11 +99,11 @@ namespace TP2.REST.AccessData.Queries
                 .Where("ISBN", isbn)
                 .Get<int>()
                 .FirstOrDefault();
-            
+
             //Decrementamos el stock
             db.Query("Libro")
                 .Where("ISBN", isbn)
-                .Update(new { Stock = query-1 });
+                .Update(new { Stock = query - 1 });
         }
     }
 }

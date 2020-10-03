@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using TP2.REST.Application.Services;
-using TP2.REST.Domain.DTO;
-using TP2.REST.Domain.Entities;
 
 namespace TP2.REST.Presentation.Controllers
 {
@@ -14,12 +12,6 @@ namespace TP2.REST.Presentation.Controllers
         public LibroController(ILibroService service)
         {
             libroService = service;
-        }
-
-        [HttpPost]
-        public Libro Post(LibroDTO libro)
-        {
-            return libroService.CreateLibro(libro);
         }
 
         [HttpGet]
