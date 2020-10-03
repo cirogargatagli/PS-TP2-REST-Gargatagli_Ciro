@@ -1,4 +1,3 @@
-using System.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SqlKata.Compilers;
+using System.Data;
 using TP2.REST.AccessData;
 using TP2.REST.AccessData.Commands;
 using TP2.REST.AccessData.Queries;
@@ -47,7 +47,7 @@ namespace TP2.REST
             {
                 s.SwaggerDoc("v1", new OpenApiInfo { Title = "REST", Version = "v1" });
             });
-             
+
 
             services.AddTransient<IGenericRepository, GenericsRepository>();
             services.AddTransient<IClienteService, ClienteService>();

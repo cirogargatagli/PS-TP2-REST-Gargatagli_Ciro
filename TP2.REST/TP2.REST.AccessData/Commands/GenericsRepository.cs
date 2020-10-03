@@ -1,12 +1,11 @@
-﻿using System;
-using TP2.REST.Domain.Commands;
+﻿using TP2.REST.Domain.Commands;
 
 namespace TP2.REST.AccessData.Commands
 {
     public class GenericsRepository : IGenericRepository
     {
         private readonly BibliotecaContext dbcontext;
-        public GenericsRepository (BibliotecaContext context)
+        public GenericsRepository(BibliotecaContext context)
         {
             dbcontext = context;
         }

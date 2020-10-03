@@ -28,7 +28,7 @@ namespace TP2.REST.Application.Services
 
         public GenericCreatedResponseDTO CreateAlquiler(AlquilerDTO alquiler)
         {
-            if(alquiler.FechaAlquiler == null && alquiler.FechaReserva == null)
+            if (alquiler.FechaAlquiler == null && alquiler.FechaReserva == null)
             {
                 throw new Exception();
             }

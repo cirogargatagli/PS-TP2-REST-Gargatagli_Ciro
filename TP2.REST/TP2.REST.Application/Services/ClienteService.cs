@@ -13,8 +13,9 @@ namespace TP2.REST.Application.Services
 
         List<ResponseGetCliente> GetClientes(string nombre, string apellido, string dni);
 
-        ResponseGetCliente GetByID(int clienteid);
         bool ExisteDNI(string dni);
+
+        string ValidarCliente(ClienteDTO cliente);
     }
     public class ClienteService : IClienteService
     {
@@ -45,14 +46,22 @@ namespace TP2.REST.Application.Services
             return _query.ExisteDNI(dni);
         }
 
-        public ResponseGetCliente GetByID(int clienteid)
-        {
-            return _query.GetByID(clienteid);
-        }
-
         public List<ResponseGetCliente> GetClientes(string nombre, string apellido, string dni)
         {
             return _query.GetAllClientes(nombre, apellido, dni);
+        }
+
+        public string ValidarCliente(ClienteDTO clienteDto)
+        {
+            if (_query.ExisteDNI(clienteDto.DNI)) 
+                return "Ya existe un cliente con el DNI ingresado";
+            if (!Validacion.ComprobarFormatoEmail(clienteDto.Email))
+                return "El formato del mail ingresado no es válido";
+            if (!Validacion.ValidarSoloLetras(clienteDto.Nombre))
+                return "El nombre ingresado no es válido";
+            if (!Validacion.ValidarSoloLetras(clienteDto.Apellido))
+                return "El apellido ingresado no es válido";
+            return "";
         }
     }
 }

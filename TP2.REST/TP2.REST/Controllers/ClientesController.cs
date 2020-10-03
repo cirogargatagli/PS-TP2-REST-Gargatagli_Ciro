@@ -1,5 +1,6 @@
-﻿using System;
+﻿using Castle.Core.Internal;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using TP2.REST.Application.Services;
 using TP2.REST.Domain.DTO;
 
@@ -12,19 +13,25 @@ namespace TP2.REST.Presentation.Controllers
         private readonly IClienteService clienteService;
         public ClientesController(IClienteService service)
         {
-            clienteService = service;            
+            clienteService = service;
         }
 
         [HttpPost]
         public IActionResult Post(ClienteDTO cliente)
-        {            
-            try
+        {
+            try 
             {
-                if (clienteService.ExisteDNI(cliente.DNI))
-                    return new JsonResult("Ya existe") { StatusCode = 400 };
-                return new JsonResult(clienteService.CreateCliente(cliente)) { StatusCode = 201 };
+                string validar = clienteService.ValidarCliente(cliente);
+                if (validar.IsNullOrEmpty())
+                {
+                    return new JsonResult(clienteService.CreateCliente(cliente)) { StatusCode = 201 };
+                }
+                else
+                {
+                    return BadRequest(validar);
+                }                
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
@@ -36,19 +43,6 @@ namespace TP2.REST.Presentation.Controllers
             try
             {
                 return new JsonResult(clienteService.GetClientes(nombre, apellido, dni)) { StatusCode = 200 };
-            }
-            catch(Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetClienteByID(int id)
-        {
-            try
-            {
-                return new JsonResult(clienteService.GetByID(id)) { StatusCode = 200 };
             }
             catch (Exception e)
             {
