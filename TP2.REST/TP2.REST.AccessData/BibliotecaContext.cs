@@ -105,7 +105,6 @@ namespace TP2.REST.AccessData
                 entity.HasData(new EstadoAlquiler { EstadoAlquilerId = 2, Descripcion = "Alquilado" });
                 entity.HasData(new EstadoAlquiler { EstadoAlquilerId = 3, Descripcion = "Cancelado" });
             });
-
         }
     }
 }
