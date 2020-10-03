@@ -17,25 +17,27 @@ namespace TP2.REST.Application
                 else
                 {
                     return false;
-                } 
+                }
             }
             else
             {
                 return false;
             }
         }
+
         public static bool ValidarSoloLetras(string input)
         {             
             return Regex.IsMatch(input, @"^[a-zA-Z]+$");
         }
-        public static string Dni(string dni)
+
+        public static bool ValidarDni(string dni)
         {
-            while (dni.Length < 8 || dni.Length > 8)
-            {
-                Console.Write("\n         Ingrese DNI valido:");
-                dni = Console.ReadLine();
-            }
-            return dni;
+            bool esNumero = int.TryParse(dni, out int resultado);
+            if (!esNumero)
+                return false;
+            if (dni.Length < 8 || dni.Length > 8)
+                return false;
+            return true;
         }
     }
 }
