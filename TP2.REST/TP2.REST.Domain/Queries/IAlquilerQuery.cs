@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TP2.REST.Domain.DTO;
+using TP2.REST.Domain.Entities;
 
 namespace TP2.REST.Domain.Queries
 {
@@ -7,9 +8,10 @@ namespace TP2.REST.Domain.Queries
     {
         List<ResponseGetAlquilerByEstadoId> GetByEstadoID(int estadoid);
 
-        GenericModifyResponseDTO ModifyReserva(int clienteid, string isbn);
+        Alquiler GetReserva(int clienteid, string isbn);
 
-        void ModifyStock(string isbn);
+        Libro GetLibro(string isbn);
+
         List<ResponseGetLibro> GetLibroByCliente(int idcliente);
     }
 }

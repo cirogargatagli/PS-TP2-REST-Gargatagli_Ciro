@@ -36,6 +36,7 @@ namespace TP2.REST.Application.Services
                 Email = clienteDto.Email
             };
             _repository.Add(entity);
+            _repository.SaveChanges();
             return new GenericCreatedResponseDTO { Entity = "Cliente", Id = entity.ClienteId.ToString() };
         }
 

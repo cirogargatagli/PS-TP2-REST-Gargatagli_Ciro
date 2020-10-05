@@ -13,6 +13,14 @@ namespace TP2.REST.AccessData.Commands
         public void Add<T>(T entity) where T : class
         {
             dbcontext.Add(entity);
+        }
+        public void Update<T>(T entity) where T : class
+        {
+            dbcontext.Update(entity);
+        }
+
+        public void SaveChanges()
+        {
             dbcontext.SaveChanges();
         }
     }
