@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using TP2.REST.Domain.Commands;
 using TP2.REST.Domain.DTO;
@@ -40,8 +41,12 @@ namespace TP2.REST.Application.Services
                 FechaReserva = alquiler.FechaReserva,
                 FechaAlquiler = alquiler.FechaAlquiler
             };
+            Libro libro = _query.GetLibro(alquiler.ISBN);
             _repository.Add<Alquiler>(entity);
-            _query.ModifyStock(alquiler.ISBN);
+            
+            libro.Stock -= 1;
+            _repository.Update<Libro>(libro);
+            _repository.SaveChanges();
             return new GenericCreatedResponseDTO { Entity = "Alquiler", Id = entity.AlquilerId.ToString() };
         }
 
@@ -57,7 +62,14 @@ namespace TP2.REST.Application.Services
 
         public GenericModifyResponseDTO ModifyReserva(int clienteid, string isbn)
         {
-            return _query.ModifyReserva(clienteid, isbn);
+            Alquiler alquiler = _query.GetReserva(clienteid, isbn);
+            alquiler.EstadoID = 2;
+            alquiler.FechaAlquiler = DateTime.Now;
+            alquiler.FechaDevolucion = DateTime.Now.AddDays(7);
+            _repository.Update(alquiler);
+            _repository.SaveChanges();
+
+            return new GenericModifyResponseDTO { Entity = "Alquiler", Id = alquiler.AlquilerId, Estado = "Modificado" };
         }
     }
 }

@@ -61,23 +61,10 @@ namespace TP2.REST.AccessData.Queries
             return libro;
         }
 
-        public GenericModifyResponseDTO ModifyReserva(int clienteid, string isbn)
+        public Alquiler GetReserva(int clienteid, string isbn)
         {
             var db = new QueryFactory(connection, sqlKatacompiler);
-            db.Query("Alquiler")
-                .Where(new
-                {
-                    ClienteID = clienteid,
-                    ISBN = isbn
-                })
-                .Update(new
-                {
-                    EstadoID = 2,
-                    FechaAlquiler = DateTime.Now,
-                    FechaDevolucion = DateTime.Now.AddDays(7)
-                });
-
-            var alquiler = db.Query("Alquiler")
+            Alquiler alquiler = db.Query("Alquiler")
                 .Where(new
                 {
                     ClienteID = clienteid,
@@ -86,24 +73,20 @@ namespace TP2.REST.AccessData.Queries
                 .Get<Alquiler>()
                 .FirstOrDefault();
 
-            return new GenericModifyResponseDTO { Entity = "Alquiler", Id = alquiler.AlquilerId.ToString(), Estado = "Modificado" };
+            return alquiler;
         }
 
-        public void ModifyStock(string isbn)
+        public Libro GetLibro(string isbn)
         {
             var db = new QueryFactory(connection, sqlKatacompiler);
 
             //Consultamos cuál es el stock actual del libro
-            int query = db.Query("Libro")
-                .Select("Stock")
+            Libro libro = db.Query("Libro")
                 .Where("ISBN", isbn)
-                .Get<int>()
+                .Get<Libro>()
                 .FirstOrDefault();
 
-            //Decrementamos el stock
-            db.Query("Libro")
-                .Where("ISBN", isbn)
-                .Update(new { Stock = query - 1 });
+            return libro;
         }
     }
 }

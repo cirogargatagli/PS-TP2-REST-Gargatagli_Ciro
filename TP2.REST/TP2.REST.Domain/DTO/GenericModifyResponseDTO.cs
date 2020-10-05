@@ -5,7 +5,7 @@ namespace TP2.REST.Domain.DTO
     {
         public string Entity { get; set; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string Estado { get; set; }
     }
