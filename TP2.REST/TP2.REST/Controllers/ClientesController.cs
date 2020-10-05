@@ -22,14 +22,7 @@ namespace TP2.REST.Presentation.Controllers
             try 
             {
                 string validar = clienteService.ValidarCliente(cliente);
-                if (validar.IsNullOrEmpty())
-                {
-                    return new JsonResult(clienteService.CreateCliente(cliente)) { StatusCode = 201 };
-                }
-                else
-                {
-                    return BadRequest(validar);
-                }                
+                return (validar.IsNullOrEmpty() ? new JsonResult(clienteService.CreateCliente(cliente)) { StatusCode = 201 } : new JsonResult(validar) { StatusCode = 400 });                            
             }
             catch (Exception e)
             {
