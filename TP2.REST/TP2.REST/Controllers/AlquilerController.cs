@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Castle.Core.Internal;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using TP2.REST.Application.Services;
 using TP2.REST.Domain.DTO;
@@ -20,7 +21,8 @@ namespace TP2.REST.Presentation.Controllers
         {
             try
             {
-                return new JsonResult(alquilerService.CreateAlquiler(alquilerDTO)) { StatusCode = 201 };
+                string validar = alquilerService.ValidarAlquiler(alquilerDTO);
+                return (validar.IsNullOrEmpty() ? new JsonResult(alquilerService.CreateAlquiler(alquilerDTO)) { StatusCode = 201 } : new JsonResult(validar) { StatusCode = 400 });
             }
             catch (Exception e)
             {
