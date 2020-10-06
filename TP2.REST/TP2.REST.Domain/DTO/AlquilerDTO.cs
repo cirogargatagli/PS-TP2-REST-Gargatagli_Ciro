@@ -8,8 +8,8 @@ namespace TP2.REST.Domain.DTO
 
         public string ISBN { get; set; }
 
-        public DateTime? FechaAlquiler { get; set; }
+        public string FechaAlquiler { get; set; }
 
-        public DateTime? FechaReserva { get; set; }
+        public string FechaReserva { get; set; }
     }
 }

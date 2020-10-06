@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Text.RegularExpressions;
 
 namespace TP2.REST.Application
@@ -32,12 +33,17 @@ namespace TP2.REST.Application
 
         public static bool ValidarDni(string dni)
         {
-            bool esNumero = int.TryParse(dni, out int resultado);
+            bool esNumero = int.TryParse(dni, out _);
             if (!esNumero)
                 return false;
             if (dni.Length < 8 || dni.Length > 8)
                 return false;
             return true;
+        }
+
+        public static bool ValidarFecha(string fecha)
+        {
+            return DateTime.TryParse(fecha, out _);
         }
     }
 }

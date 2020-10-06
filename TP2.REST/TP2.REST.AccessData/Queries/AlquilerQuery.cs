@@ -88,5 +88,27 @@ namespace TP2.REST.AccessData.Queries
 
             return libro;
         }
+
+        public bool ExisteCliente(int clienteID)
+        {
+            var db = new QueryFactory(connection, sqlKatacompiler);
+            bool existeCliente = db.Query("Cliente")
+                .Where("ClienteId", clienteID)
+                .Get<bool>()
+                .FirstOrDefault();
+
+            return existeCliente;
+        }
+
+        public bool ExisteLibro(string iSBN)
+        {
+            var db = new QueryFactory(connection, sqlKatacompiler);
+            var libro = db.Query("Libro")
+                .Where("ISBN", iSBN)
+                .Get<Libro>()
+                .FirstOrDefault();
+
+            return (libro != null);
+        }
     }
 }
