@@ -56,6 +56,7 @@ namespace TP2.REST.AccessData.Queries
                 "Libro.Stock"
                 )
                 .Join("Libro", "Libro.ISBN", "Alquiler.ISBN")
+                .Where("Alquiler.ClienteId", idcliente)
                 .Get<ResponseGetLibro>()
                 .ToList();
             return libro;
