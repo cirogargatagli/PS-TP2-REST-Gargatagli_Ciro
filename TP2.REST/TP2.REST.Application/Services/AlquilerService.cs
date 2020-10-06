@@ -37,16 +37,19 @@ namespace TP2.REST.Application.Services
             if (!_query.ExisteLibro(alquiler.ISBN))
                 return "No existe un libro registrado con el Isbn ingresado";
 
-            if (alquiler.FechaAlquiler.IsNullOrEmpty() && alquiler.FechaReserva.IsNullOrEmpty() || !alquiler.FechaAlquiler.IsNullOrEmpty() && !alquiler.FechaReserva.IsNullOrEmpty())
-                return "No ingresó ninguna fecha o ingresó ambas. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva.";
+            if (alquiler.FechaAlquiler.IsNullOrEmpty() && alquiler.FechaReserva.IsNullOrEmpty())
+                return "No ingresó ninguna fecha. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva.";
+
+            if (!alquiler.FechaAlquiler.IsNullOrEmpty() && !alquiler.FechaReserva.IsNullOrEmpty())
+                return "Solo se puede ingresar una fecha. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva.";
 
             if (alquiler.FechaAlquiler.IsNullOrEmpty())
                 if (!Validacion.ValidarFecha(alquiler.FechaReserva))
-                    return "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato AAAA/MM/DD";
+                    return "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato DD/MM/AAAA";
 
             if (alquiler.FechaReserva.IsNullOrEmpty())
                 if (!Validacion.ValidarFecha(alquiler.FechaAlquiler))
-                    return "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato AAAA/MM/DD";
+                    return "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato DD/MM/AAAA";
             return "";
         }
 

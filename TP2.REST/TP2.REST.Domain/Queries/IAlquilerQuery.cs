@@ -17,5 +17,6 @@ namespace TP2.REST.Domain.Queries
         bool ExisteCliente(int clienteID);
 
         bool ExisteLibro(string iSBN);
+        bool ExisteStock(string iSBN);
     }
 }
