@@ -43,7 +43,7 @@ namespace TP2.REST.Presentation.Controllers
             }
         }
 
-        [HttpGet("Cliente/{id}")]
+        [HttpGet("cliente/{id}")]
         public IActionResult GetByCliente(int id)
         {
             try
