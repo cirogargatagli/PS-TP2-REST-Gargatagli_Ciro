@@ -24,7 +24,7 @@ namespace TP2.REST.AccessData.Queries
 
         public List<ResponseGetAlquilerByEstadoId> GetByEstadoID(int estadoid)
         {
-            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var db = new QueryFactory(connection, sqlKatacompiler);
             var alquileres_reservas = db.Query("Alquiler")
             .Select("Alquiler.AlquilerID",
             "Alquiler.ISBN",
@@ -46,7 +46,7 @@ namespace TP2.REST.AccessData.Queries
 
         public List<ResponseGetLibro> GetLibroByCliente(int idcliente)
         {
-            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var db = new QueryFactory(connection, sqlKatacompiler);
             var libro = db.Query("Alquiler")
                 .Select(
                 "Libro.ISBN",
@@ -65,7 +65,7 @@ namespace TP2.REST.AccessData.Queries
 
         public List<Alquiler> GetReserva(int clienteid, string isbn)
         {
-            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var db = new QueryFactory(connection, sqlKatacompiler);
             List<Alquiler> alquileres = db.Query("Alquiler")
                 .Where(new
                 {
@@ -81,7 +81,7 @@ namespace TP2.REST.AccessData.Queries
 
         public Libro GetLibro(string isbn)
         {
-            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var db = new QueryFactory(connection, sqlKatacompiler);
             Libro libro = db.Query("Libro")
                 .Where("ISBN", isbn)
                 .Get<Libro>()
@@ -92,7 +92,7 @@ namespace TP2.REST.AccessData.Queries
 
         public bool ExisteCliente(int clienteID)
         {
-            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var db = new QueryFactory(connection, sqlKatacompiler);
             bool existeCliente = db.Query("Cliente")
                 .Where("ClienteId", clienteID)
                 .Get<bool>()
@@ -103,7 +103,7 @@ namespace TP2.REST.AccessData.Queries
 
         public bool ExisteLibro(string iSBN)
         {
-            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var db = new QueryFactory(connection, sqlKatacompiler);
             var libro = db.Query("Libro")
                 .Where("ISBN", iSBN)
                 .Get<Libro>()
@@ -114,7 +114,7 @@ namespace TP2.REST.AccessData.Queries
 
         public bool ExisteStock(string iSBN)
         {
-            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var db = new QueryFactory(connection, sqlKatacompiler);
             var libro = db.Query("Libro")
                 .Where("ISBN", iSBN)
                 .Get<Libro>()
