@@ -24,6 +24,7 @@ namespace TP2.REST.AccessData.Queries
             var db = new QueryFactory(connection, sqlKatacompiler);
             var query = db.Query("Libro")
                 .When(!(stock==null) && !(stock==true), q => q.Where("Stock", "=", 0))
+                .When(!(stock == null) && !(stock == false), q => q.Where("Stock", ">", 0))
                 .When(!string.IsNullOrWhiteSpace(autor), q => q.WhereLike("Autor", $"%{autor}%"))
                 .When(!string.IsNullOrWhiteSpace(titulo), q => q.WhereLike("Titulo", $"%{titulo}%"))
                 .Get<ResponseGetLibro>();
