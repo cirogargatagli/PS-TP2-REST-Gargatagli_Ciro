@@ -13,7 +13,7 @@ namespace TP2.REST.Application.Services
     {
         GenericCreatedResponseDTO CreateAlquiler(AlquilerDTO alquiler);
         List<ResponseGetAlquilerByEstadoId> GetByEstadoID(int estadoid);
-        GenericModifyResponseDTO ModifyReserva(int clienteid, string isbn);
+        List<GenericModifyResponseDTO> ModifyReserva(int clienteid, string isbn);
         List<ResponseGetLibro> GetLibroByCliente(int idcliente);
         string ValidarAlquiler(AlquilerDTO alquilerDTO);
     }
@@ -36,6 +36,9 @@ namespace TP2.REST.Application.Services
 
             if (!_query.ExisteLibro(alquiler.ISBN))
                 return "No existe un libro registrado con el Isbn ingresado";
+
+            if (!_query.ExisteStock(alquiler.ISBN))
+                return "No existe stock del libro que desea alquilar o reservar";
 
             if (alquiler.FechaAlquiler.IsNullOrEmpty() && alquiler.FechaReserva.IsNullOrEmpty())
                 return "No ingresó ninguna fecha. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva.";
@@ -103,16 +106,21 @@ namespace TP2.REST.Application.Services
             return _query.GetByEstadoID(estadoid);
         }
 
-        public GenericModifyResponseDTO ModifyReserva(int clienteid, string isbn)
+        public List<GenericModifyResponseDTO> ModifyReserva(int clienteid, string isbn)
         {
-            Alquiler alquiler = _query.GetReserva(clienteid, isbn);
-            alquiler.EstadoID = 2;
-            alquiler.FechaAlquiler = DateTime.Now;
-            alquiler.FechaDevolucion = DateTime.Now.AddDays(7);
-            _repository.Update(alquiler);
+            List<Alquiler> reservas = _query.GetReserva(clienteid, isbn);
+            List<GenericModifyResponseDTO> reservasModificadas = new List<GenericModifyResponseDTO>();
+            foreach (Alquiler reserva in reservas)
+            {
+                reserva.EstadoID = 2;
+                reserva.FechaAlquiler = DateTime.Now;
+                reserva.FechaDevolucion = DateTime.Now.AddDays(7);
+                reservasModificadas.Add(new GenericModifyResponseDTO { Entity = "Alquiler", Id = reserva.AlquilerId, Estado = "Modificado" });
+            }
+            _repository.UpdateRange(reservas);
             _repository.SaveChanges();
 
-            return new GenericModifyResponseDTO { Entity = "Alquiler", Id = alquiler.AlquilerId, Estado = "Modificado" };
+            return reservasModificadas;
         }
     }
 }

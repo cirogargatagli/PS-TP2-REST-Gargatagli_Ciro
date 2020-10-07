@@ -15,6 +15,7 @@ namespace TP2.REST.AccessData.Queries
         private readonly IDbConnection connection;
         private readonly Compiler sqlKatacompiler;
 
+
         public AlquilerQuery(IDbConnection connection, Compiler sqlKatacompiler)
         {
             this.connection = connection;
@@ -23,29 +24,29 @@ namespace TP2.REST.AccessData.Queries
 
         public List<ResponseGetAlquilerByEstadoId> GetByEstadoID(int estadoid)
         {
-            var db = new QueryFactory(connection, sqlKatacompiler);
+            using var db = new QueryFactory(connection, sqlKatacompiler);
             var alquileres_reservas = db.Query("Alquiler")
-                .Select("Alquiler.AlquilerID",
-                "Alquiler.ISBN",
-                "Alquiler.EstadoID",
-                "Libro.Titulo AS LibroTitulo",
-                "Libro.Autor AS LibroAutor",
-                "Libro.Editorial AS LibroEditorial",
-                "Libro.Edicion AS LibroEdicion",
-                "Libro.Stock AS LibroStock",
-                "EstadoAlquiler.Descripcion AS EstadoAlquilerDescripcion"
-                )
-                .Join("Libro", "Libro.ISBN", "Alquiler.ISBN")
-                .Join("EstadoAlquiler", "EstadoAlquiler.EstadoAlquilerID", "Alquiler.EstadoID")
-                .When(!(estadoid == 0), q => q.WhereLike("EstadoID", $"%{estadoid}%"))
-                .Get<ResponseGetAlquilerByEstadoId>()
-                .ToList();
+            .Select("Alquiler.AlquilerID",
+            "Alquiler.ISBN",
+            "Alquiler.EstadoID",
+            "Libro.Titulo AS LibroTitulo",
+            "Libro.Autor AS LibroAutor",
+            "Libro.Editorial AS LibroEditorial",
+            "Libro.Edicion AS LibroEdicion",
+            "Libro.Stock AS LibroStock",
+            "EstadoAlquiler.Descripcion AS EstadoAlquilerDescripcion"
+            )
+            .Join("Libro", "Libro.ISBN", "Alquiler.ISBN")
+            .Join("EstadoAlquiler", "EstadoAlquiler.EstadoAlquilerID", "Alquiler.EstadoID")
+            .When(!(estadoid == 0), q => q.WhereLike("EstadoID", $"%{estadoid}%"))
+            .Get<ResponseGetAlquilerByEstadoId>()
+            .ToList();
             return alquileres_reservas;
         }
 
         public List<ResponseGetLibro> GetLibroByCliente(int idcliente)
         {
-            var db = new QueryFactory(connection, sqlKatacompiler);
+            using var db = new QueryFactory(connection, sqlKatacompiler);
             var libro = db.Query("Alquiler")
                 .Select(
                 "Libro.ISBN",
@@ -62,26 +63,25 @@ namespace TP2.REST.AccessData.Queries
             return libro;
         }
 
-        public Alquiler GetReserva(int clienteid, string isbn)
+        public List<Alquiler> GetReserva(int clienteid, string isbn)
         {
-            var db = new QueryFactory(connection, sqlKatacompiler);
-            Alquiler alquiler = db.Query("Alquiler")
+            using var db = new QueryFactory(connection, sqlKatacompiler);
+            List<Alquiler> alquileres = db.Query("Alquiler")
                 .Where(new
                 {
                     ClienteID = clienteid,
-                    ISBN = isbn
+                    ISBN = isbn,
+                    EstadoId = 1
                 })
                 .Get<Alquiler>()
-                .FirstOrDefault();
+                .ToList();
 
-            return alquiler;
+            return alquileres;
         }
 
         public Libro GetLibro(string isbn)
         {
-            var db = new QueryFactory(connection, sqlKatacompiler);
-
-            //Consultamos cuál es el stock actual del libro
+            using var db = new QueryFactory(connection, sqlKatacompiler);
             Libro libro = db.Query("Libro")
                 .Where("ISBN", isbn)
                 .Get<Libro>()
@@ -92,7 +92,7 @@ namespace TP2.REST.AccessData.Queries
 
         public bool ExisteCliente(int clienteID)
         {
-            var db = new QueryFactory(connection, sqlKatacompiler);
+            using var db = new QueryFactory(connection, sqlKatacompiler);
             bool existeCliente = db.Query("Cliente")
                 .Where("ClienteId", clienteID)
                 .Get<bool>()
@@ -103,13 +103,24 @@ namespace TP2.REST.AccessData.Queries
 
         public bool ExisteLibro(string iSBN)
         {
-            var db = new QueryFactory(connection, sqlKatacompiler);
+            using var db = new QueryFactory(connection, sqlKatacompiler);
             var libro = db.Query("Libro")
                 .Where("ISBN", iSBN)
                 .Get<Libro>()
                 .FirstOrDefault();
 
             return (libro != null);
+        }
+
+        public bool ExisteStock(string iSBN)
+        {
+            using var db = new QueryFactory(connection, sqlKatacompiler);
+            var libro = db.Query("Libro")
+                .Where("ISBN", iSBN)
+                .Get<Libro>()
+                .FirstOrDefault();
+
+            return (libro.Stock > 0);
         }
     }
 }

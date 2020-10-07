@@ -7,7 +7,7 @@ namespace TP2.REST.Application.Services
 {
     public interface ILibroService
     {
-        List<ResponseGetLibro> GetLibros(bool stock, string autor, string titulo);
+        List<ResponseGetLibro> GetLibros(bool? stock, string autor, string titulo);
     }
 
     public class LibroService : ILibroService
@@ -21,7 +21,7 @@ namespace TP2.REST.Application.Services
             _query = query;
         }
 
-        public List<ResponseGetLibro> GetLibros(bool stock, string autor, string titulo)
+        public List<ResponseGetLibro> GetLibros(bool? stock, string autor, string titulo)
         {
             return _query.GetLibros(stock, autor, titulo);
         }
