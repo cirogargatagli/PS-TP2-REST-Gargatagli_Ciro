@@ -10,8 +10,8 @@ using TP2.REST.AccessData;
 namespace TP2.REST.AccessData.Migrations
 {
     [DbContext(typeof(BibliotecaContext))]
-    [Migration("20200920132729_asdasd")]
-    partial class asdasd
+    [Migration("20201007102615_CreateApi_RestDB")]
+    partial class CreateApi_RestDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

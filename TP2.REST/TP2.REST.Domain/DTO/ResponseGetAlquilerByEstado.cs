@@ -1,16 +1,14 @@
-﻿
-
-namespace TP2.REST.Domain.DTO
+﻿namespace TP2.REST.Domain.DTO
 {
     public class ResponseGetAlquilerByEstadoId
     {
         public int AlquilerId { get; set; }
 
-        public string ISBN { get; set; }
-
         public int EstadoID { get; set; }
 
         public string EstadoAlquilerDescripcion { get; set; }
+
+        public string ISBN { get; set; }
 
         public string LibroTitulo { get; set; }
 

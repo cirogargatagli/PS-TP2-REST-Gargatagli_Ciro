@@ -1,20 +1,13 @@
 ﻿using System.Collections.Generic;
-using TP2.REST.Domain.Commands;
 using TP2.REST.Domain.DTO;
 using TP2.REST.Domain.Entities;
-using TP2.REST.Domain.Queries;
+using TP2.REST.Domain.Interfaces.Commands;
+using TP2.REST.Domain.Interfaces.Queries;
+using TP2.REST.Domain.Interfaces.Services;
 
 
 namespace TP2.REST.Application.Services
 {
-    public interface IClienteService
-    {
-        GenericCreatedResponseDTO CreateCliente(ClienteDTO clienteDto);
-
-        List<ResponseGetCliente> GetClientes(string nombre, string apellido, string dni);
-
-        string ValidarCliente(ClienteDTO cliente);
-    }
     public class ClienteService : IClienteService
     {
         private readonly IGenericRepository _repository;
@@ -56,7 +49,7 @@ namespace TP2.REST.Application.Services
             if (_query.ExisteDNI(clienteDto.DNI))
                 return "Ya existe un cliente registrado con el DNI ingresado.";
             if (!Validacion.ComprobarFormatoEmail(clienteDto.Email))
-                return "El formato del mail ingresado no es válido.";          
+                return "El formato del mail ingresado no es válido.";
             return "";
         }
     }

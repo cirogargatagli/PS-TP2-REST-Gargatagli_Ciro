@@ -5,57 +5,30 @@ namespace TP2.REST.Domain.Entities
 {
     public class Libro
     {
-        private string isbnId;
-        private string titulo;
-        private string autor;
-        private string editorial;
-        private string edicion;
-        private int stock;
-        private string imagen;
-
         [Key]
         [Column(TypeName = "varchar(50)")]
-        public string ISBN { get => isbnId; set => isbnId = value; }
+        public string ISBN { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Titulo { get => titulo; set => titulo = value; }
+        public string Titulo { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Autor { get => autor; set => autor = value; }
+        public string Autor { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Editorial { get => editorial; set => editorial = value; }
+        public string Editorial { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Edicion { get => edicion; set => edicion = value; }
+        public string Edicion { get; set; }
 
-        public int Stock { get => stock; set => stock = value; }
+        public int Stock { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Imagen { get => imagen; set => imagen = value; }
-
-        public override string ToString()
-        {
-            return "ISBN: " + ISBN + "\n" +
-                   "Título: " + Titulo + "\n" +
-                   "Autor: " + Autor + "\n" +
-                   "Editorial: " + Editorial + "\n" +
-                   "Edición: " + Edicion + "\n" +
-                   "Stock: " + Stock;
-        }
-
-        public string InformarLibro()
-        {
-            return "ISBN: " + ISBN + "\n" +
-                   "Título: " + Titulo + "\n" +
-                   "Autor: " + Autor + "\n" +
-                   "Editorial: " + Editorial + "\n" +
-                   "Edición: " + Edicion;
-        }
+        public string Imagen { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TP2.REST.Domain.DTO
+﻿namespace TP2.REST.Domain.DTO
 {
     public class AlquilerDTO
     {

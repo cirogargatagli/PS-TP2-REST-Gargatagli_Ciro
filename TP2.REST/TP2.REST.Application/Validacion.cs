@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 
 namespace TP2.REST.Application
@@ -27,7 +26,7 @@ namespace TP2.REST.Application
         }
 
         public static bool ValidarSoloLetras(string input)
-        {             
+        {
             return Regex.IsMatch(input, @"^[a-zA-Z]+$");
         }
 

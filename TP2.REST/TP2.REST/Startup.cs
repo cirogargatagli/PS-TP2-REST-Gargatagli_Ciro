@@ -12,8 +12,9 @@ using TP2.REST.AccessData;
 using TP2.REST.AccessData.Commands;
 using TP2.REST.AccessData.Queries;
 using TP2.REST.Application.Services;
-using TP2.REST.Domain.Commands;
-using TP2.REST.Domain.Queries;
+using TP2.REST.Domain.Interfaces.Commands;
+using TP2.REST.Domain.Interfaces.Queries;
+using TP2.REST.Domain.Interfaces.Services;
 
 namespace TP2.REST
 {

@@ -1,17 +1,17 @@
 ﻿using Castle.Core.Internal;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using TP2.REST.Application.Services;
 using TP2.REST.Domain.DTO;
+using TP2.REST.Domain.Interfaces.Services;
 
 namespace TP2.REST.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/clientes")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class ClienteController : ControllerBase
     {
         private readonly IClienteService clienteService;
-        public ClientesController(IClienteService service)
+        public ClienteController(IClienteService service)
         {
             clienteService = service;
         }
@@ -19,10 +19,10 @@ namespace TP2.REST.Presentation.Controllers
         [HttpPost]
         public IActionResult Post(ClienteDTO cliente)
         {
-            try 
+            try
             {
                 string validar = clienteService.ValidarCliente(cliente);
-                return (validar.IsNullOrEmpty() ? new JsonResult(clienteService.CreateCliente(cliente)) { StatusCode = 201 } : new JsonResult(validar) { StatusCode = 400 });                            
+                return (validar.IsNullOrEmpty() ? new JsonResult(clienteService.CreateCliente(cliente)) { StatusCode = 201 } : new JsonResult(validar) { StatusCode = 400 });
             }
             catch (Exception e)
             {
