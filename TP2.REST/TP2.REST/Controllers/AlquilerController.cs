@@ -61,7 +61,7 @@ namespace TP2.REST.Presentation.Controllers
         {
             try
             {
-                return new JsonResult(alquilerService.ModifyReserva(clienteid, isbn)) { StatusCode = 204 };
+                return new JsonResult(alquilerService.ModifyReserva(clienteid, isbn)) { StatusCode = 200 };
             }
             catch (Exception e)
             {

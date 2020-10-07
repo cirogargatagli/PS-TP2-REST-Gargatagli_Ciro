@@ -19,11 +19,11 @@ namespace TP2.REST.AccessData.Queries
             this.sqlKatacompiler = sqlKatacompiler;
         }
 
-        public List<ResponseGetLibro> GetLibros(bool stock, string autor, string titulo)
+        public List<ResponseGetLibro> GetLibros(bool? stock, string autor, string titulo)
         {
             var db = new QueryFactory(connection, sqlKatacompiler);
             var query = db.Query("Libro")
-                .When(!stock, q => q.Where("Stock", "=", 0))
+                .When(!(stock==null) && !(stock==true), q => q.Where("Stock", "=", 0))
                 .When(!string.IsNullOrWhiteSpace(autor), q => q.WhereLike("Autor", $"%{autor}%"))
                 .When(!string.IsNullOrWhiteSpace(titulo), q => q.WhereLike("Titulo", $"%{titulo}%"))
                 .Get<ResponseGetLibro>();

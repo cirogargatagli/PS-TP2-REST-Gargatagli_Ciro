@@ -5,6 +5,6 @@ namespace TP2.REST.Domain.Queries
 {
     public interface ILibroQuery
     {
-        List<ResponseGetLibro> GetLibros(bool stock, string autor, string titulo);
+        List<ResponseGetLibro> GetLibros(bool? stock, string autor, string titulo);
     }
 }

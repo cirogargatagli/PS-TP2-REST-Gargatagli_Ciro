@@ -8,7 +8,7 @@ namespace TP2.REST.Domain.Queries
     {
         List<ResponseGetAlquilerByEstadoId> GetByEstadoID(int estadoid);
 
-        Alquiler GetReserva(int clienteid, string isbn);
+        List<Alquiler> GetReserva(int clienteid, string isbn);
 
         Libro GetLibro(string isbn);
 
@@ -17,6 +17,7 @@ namespace TP2.REST.Domain.Queries
         bool ExisteCliente(int clienteID);
 
         bool ExisteLibro(string iSBN);
+
         bool ExisteStock(string iSBN);
     }
 }
