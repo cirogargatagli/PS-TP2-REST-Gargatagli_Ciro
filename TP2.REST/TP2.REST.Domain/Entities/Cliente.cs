@@ -5,28 +5,22 @@ namespace TP2.REST.Domain.Entities
 {
     public class Cliente
     {
-        private int clienteId;
-        private string dni;
-        private string nombre;
-        private string apellido;
-        private string email;
-
-        public int ClienteId { get => clienteId; set => clienteId = value; }
+        public int ClienteId { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(10)")]
-        public string DNI { get => dni; set => dni = value; }
+        public string DNI { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Nombre { get => nombre; set => nombre = value; }
+        public string Nombre { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Apellido { get => apellido; set => apellido = value; }
+        public string Apellido { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Email { get => email; set => email = value; }
+        public string Email { get; set; }
     }
 }

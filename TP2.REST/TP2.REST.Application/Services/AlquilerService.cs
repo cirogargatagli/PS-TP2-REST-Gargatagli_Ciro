@@ -1,23 +1,14 @@
 ﻿using Castle.Core.Internal;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
-using TP2.REST.Domain.Commands;
 using TP2.REST.Domain.DTO;
 using TP2.REST.Domain.Entities;
-using TP2.REST.Domain.Queries;
+using TP2.REST.Domain.Interfaces.Commands;
+using TP2.REST.Domain.Interfaces.Queries;
+using TP2.REST.Domain.Interfaces.Services;
 
 namespace TP2.REST.Application.Services
 {
-    public interface IAlquilerService
-    {
-        GenericCreatedResponseDTO CreateAlquiler(AlquilerDTO alquiler);
-        List<ResponseGetAlquilerByEstadoId> GetByEstadoID(int estadoid);
-        List<GenericModifyResponseDTO> ModifyReserva(int clienteid, string isbn);
-        List<ResponseGetLibro> GetLibroByCliente(int idcliente);
-        string ValidarAlquiler(AlquilerDTO alquilerDTO);
-    }
-
     public class AlquilerService : IAlquilerService
     {
         private readonly IGenericRepository _repository;
@@ -28,32 +19,42 @@ namespace TP2.REST.Application.Services
             _repository = repository;
             _query = query;
         }
-        
-        public string ValidarAlquiler(AlquilerDTO alquiler)
+
+        public ResponseBadRequest ValidarAlquiler(AlquilerDTO alquiler)
         {
             if (!_query.ExisteCliente(alquiler.ClienteID))
-                return "No existe un cliente registrado con el ID ingresado.";
+                return new ResponseBadRequest { CódigoError = 400, Error = "No existe un cliente registrado con el ID ingresado." };
 
             if (!_query.ExisteLibro(alquiler.ISBN))
-                return "No existe un libro registrado con el Isbn ingresado";
+                return new ResponseBadRequest { CódigoError = 400, Error = "No existe un libro registrado con el Isbn ingresado" };            
 
             if (!_query.ExisteStock(alquiler.ISBN))
-                return "No existe stock del libro que desea alquilar o reservar";
-
+                return new ResponseBadRequest { CódigoError = 400, Error = "No existe stock del libro que desea alquilar o reservar" };
+            
             if (alquiler.FechaAlquiler.IsNullOrEmpty() && alquiler.FechaReserva.IsNullOrEmpty())
-                return "No ingresó ninguna fecha. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva.";
-
+                return new ResponseBadRequest { CódigoError = 400, Error = "No ingresó ninguna fecha. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva." };
+            
             if (!alquiler.FechaAlquiler.IsNullOrEmpty() && !alquiler.FechaReserva.IsNullOrEmpty())
-                return "Solo se puede ingresar una fecha. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva.";
-
+                return new ResponseBadRequest { CódigoError = 400, Error = "Solo se puede ingresar una fecha. Recuerde ingresar la fecha correspondiente al tipo de registro que desea realizar: alquiler o reserva." };
+            
             if (alquiler.FechaAlquiler.IsNullOrEmpty())
                 if (!Validacion.ValidarFecha(alquiler.FechaReserva))
-                    return "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato DD/MM/AAAA";
-
+                    return new ResponseBadRequest { CódigoError = 400, Error = "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato DD/MM/AAAA" };
+            
             if (alquiler.FechaReserva.IsNullOrEmpty())
                 if (!Validacion.ValidarFecha(alquiler.FechaAlquiler))
-                    return "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato DD/MM/AAAA";
-            return "";
+                    new ResponseBadRequest { CódigoError = 400, Error = "La fecha ingresada no se expresó en un formato válido. Recuerde utilizar el formato DD/MM/AAAA" };
+
+            return null;
+        }
+
+        public ResponseBadRequest ValidarModifyReserva(int clienteid, string isbn)
+        {
+            if (_query.ExisteReservaDelCliente(clienteid))
+                return new ResponseBadRequest { CódigoError = 400, Error = "No existe una reserva del cliente ingresado" };
+            if (_query.ExisteReservaDelLibro(isbn))
+                return new ResponseBadRequest { CódigoError = 400, Error = "No existe una reserva del libro ingresado" };            
+            return null;
         }
 
         public GenericCreatedResponseDTO CreateAlquiler(AlquilerDTO alquiler)
@@ -68,9 +69,8 @@ namespace TP2.REST.Application.Services
                     EstadoID = 1,
                     FechaReserva = fechaValidada
                 };
-                Libro libro = _query.GetLibro(alquiler.ISBN);
                 _repository.Add<Alquiler>(entity);
-
+                Libro libro = _query.GetLibro(alquiler.ISBN);
                 libro.Stock -= 1;
                 _repository.Update<Libro>(libro);
                 _repository.SaveChanges();
@@ -96,7 +96,7 @@ namespace TP2.REST.Application.Services
             }
         }
 
-        public List<ResponseGetLibro> GetLibroByCliente(int idcliente)
+        public List<ResponseGetLibrosByCliente> GetLibroByCliente(int idcliente)
         {
             return _query.GetLibroByCliente(idcliente);
         }
@@ -106,21 +106,17 @@ namespace TP2.REST.Application.Services
             return _query.GetByEstadoID(estadoid);
         }
 
-        public List<GenericModifyResponseDTO> ModifyReserva(int clienteid, string isbn)
+        public void ModifyReserva(int clienteid, string isbn)
         {
             List<Alquiler> reservas = _query.GetReserva(clienteid, isbn);
-            List<GenericModifyResponseDTO> reservasModificadas = new List<GenericModifyResponseDTO>();
             foreach (Alquiler reserva in reservas)
             {
                 reserva.EstadoID = 2;
                 reserva.FechaAlquiler = DateTime.Now;
                 reserva.FechaDevolucion = DateTime.Now.AddDays(7);
-                reservasModificadas.Add(new GenericModifyResponseDTO { Entity = "Alquiler", Id = reserva.AlquilerId, Estado = "Modificado" });
             }
             _repository.UpdateRange(reservas);
             _repository.SaveChanges();
-
-            return reservasModificadas;
         }
     }
 }

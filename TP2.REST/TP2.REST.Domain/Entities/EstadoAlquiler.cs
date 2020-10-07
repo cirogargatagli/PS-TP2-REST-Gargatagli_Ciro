@@ -5,13 +5,10 @@ namespace TP2.REST.Domain.Entities
 {
     public class EstadoAlquiler
     {
-        private int estadoAlquilerId;
-        private string descripcion;
-
-        public int EstadoAlquilerId { get => estadoAlquilerId; set => estadoAlquilerId = value; }
+        public int EstadoAlquilerId { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(45)")]
-        public string Descripcion { get => descripcion; set => descripcion = value; }
+        public string Descripcion { get; set; }
     }
 }

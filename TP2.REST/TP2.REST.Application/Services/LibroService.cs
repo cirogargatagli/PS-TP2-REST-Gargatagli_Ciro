@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
-using TP2.REST.Domain.Commands;
 using TP2.REST.Domain.DTO;
-using TP2.REST.Domain.Queries;
+using TP2.REST.Domain.Interfaces.Commands;
+using TP2.REST.Domain.Interfaces.Queries;
+using TP2.REST.Domain.Interfaces.Services;
 
 namespace TP2.REST.Application.Services
 {
-    public interface ILibroService
-    {
-        List<ResponseGetLibro> GetLibros(bool? stock, string autor, string titulo);
-    }
-
     public class LibroService : ILibroService
     {
         private readonly IGenericRepository libroRepository;
@@ -25,6 +21,5 @@ namespace TP2.REST.Application.Services
         {
             return _query.GetLibros(stock, autor, titulo);
         }
-
     }
 }

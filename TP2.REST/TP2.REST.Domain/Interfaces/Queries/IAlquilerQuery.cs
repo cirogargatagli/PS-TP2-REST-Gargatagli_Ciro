@@ -2,7 +2,7 @@
 using TP2.REST.Domain.DTO;
 using TP2.REST.Domain.Entities;
 
-namespace TP2.REST.Domain.Queries
+namespace TP2.REST.Domain.Interfaces.Queries
 {
     public interface IAlquilerQuery
     {
@@ -12,12 +12,13 @@ namespace TP2.REST.Domain.Queries
 
         Libro GetLibro(string isbn);
 
-        List<ResponseGetLibro> GetLibroByCliente(int idcliente);
+        List<ResponseGetLibrosByCliente> GetLibroByCliente(int idcliente);
 
         bool ExisteCliente(int clienteID);
-
         bool ExisteLibro(string iSBN);
-
         bool ExisteStock(string iSBN);
+
+        bool ExisteReservaDelCliente(int clienteid);
+        bool ExisteReservaDelLibro(string isbn);
     }
 }

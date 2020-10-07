@@ -1,12 +1,11 @@
 ﻿using SqlKata.Compilers;
 using SqlKata.Execution;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TP2.REST.Domain.DTO;
 using TP2.REST.Domain.Entities;
-using TP2.REST.Domain.Queries;
+using TP2.REST.Domain.Interfaces.Queries;
 
 namespace TP2.REST.AccessData.Queries
 {
@@ -44,7 +43,7 @@ namespace TP2.REST.AccessData.Queries
             return alquileres_reservas;
         }
 
-        public List<ResponseGetLibro> GetLibroByCliente(int idcliente)
+        public List<ResponseGetLibrosByCliente> GetLibroByCliente(int idcliente)
         {
             var db = new QueryFactory(connection, sqlKatacompiler);
             var libro = db.Query("Alquiler")
@@ -53,12 +52,11 @@ namespace TP2.REST.AccessData.Queries
                 "Libro.Titulo",
                 "Libro.Autor",
                 "Libro.Editorial",
-                "Libro.Edicion",
-                "Libro.Stock"
+                "Libro.Edicion"
                 )
                 .Join("Libro", "Libro.ISBN", "Alquiler.ISBN")
                 .Where("Alquiler.ClienteId", idcliente)
-                .Get<ResponseGetLibro>()
+                .Get<ResponseGetLibrosByCliente>()
                 .ToList();
             return libro;
         }
@@ -122,5 +120,29 @@ namespace TP2.REST.AccessData.Queries
 
             return (libro.Stock > 0);
         }
+
+        public bool ExisteReservaDelCliente(int clienteID)
+        {
+            var db = new QueryFactory(connection, sqlKatacompiler);
+            bool existeReserva = db.Query("Alquiler")
+                .Where("ClienteId", clienteID)
+                .Get<bool>()
+                .FirstOrDefault();
+
+            return existeReserva;
+        }
+
+        public bool ExisteReservaDelLibro(string isbn)
+        {
+            var db = new QueryFactory(connection, sqlKatacompiler);
+            bool existeReserva = db.Query("Alquiler")
+                .Where("ISBN", isbn)
+                .Get<bool>()
+                .FirstOrDefault();
+
+            return existeReserva;
+        }
+
+
     }
 }

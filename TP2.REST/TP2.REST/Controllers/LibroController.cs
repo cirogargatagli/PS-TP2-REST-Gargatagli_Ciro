@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using TP2.REST.Application.Services;
+using TP2.REST.Domain.Interfaces.Services;
 
 namespace TP2.REST.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/libros")]
     [ApiController]
     public class LibroController : ControllerBase
     {

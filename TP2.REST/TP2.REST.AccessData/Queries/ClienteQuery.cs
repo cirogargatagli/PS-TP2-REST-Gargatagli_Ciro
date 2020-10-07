@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TP2.REST.Domain.DTO;
-using TP2.REST.Domain.Queries;
+using TP2.REST.Domain.Interfaces.Queries;
 
 namespace TP2.REST.AccessData.Queries
 {

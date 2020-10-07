@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TP2.REST.Domain.Commands;
+using TP2.REST.Domain.Interfaces.Commands;
 
 namespace TP2.REST.AccessData.Commands
 {
