@@ -1,5 +1,6 @@
 ﻿using SqlKata.Compilers;
 using SqlKata.Execution;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -40,25 +41,46 @@ namespace TP2.REST.AccessData.Queries
             .When(!(estadoid == 0), q => q.WhereLike("EstadoID", $"%{estadoid}%"))
             .Get<ResponseGetAlquilerByEstadoId>()
             .ToList();
+
+
+
             return alquileres_reservas;
         }
 
         public List<ResponseGetLibrosByCliente> GetLibroByCliente(int idcliente)
         {
             var db = new QueryFactory(connection, sqlKatacompiler);
-            var libro = db.Query("Alquiler")
+            var alquileres = db.Query("Alquiler")
                 .Select(
+                "Alquiler.FechaAlquiler",
+                "Alquiler.FechaReserva",
+                "Alquiler.FechaDevolucion",
                 "Libro.ISBN",
                 "Libro.Titulo",
                 "Libro.Autor",
                 "Libro.Editorial",
-                "Libro.Edicion"
+                "Libro.Edicion",
+                "Libro.Imagen"
                 )
                 .Join("Libro", "Libro.ISBN", "Alquiler.ISBN")
                 .Where("Alquiler.ClienteId", idcliente)
                 .Get<ResponseGetLibrosByCliente>()
                 .ToList();
-            return libro;
+
+            foreach (ResponseGetLibrosByCliente response in alquileres)
+            {
+                if (response.FechaDevolucion == null)
+                {
+                    response.FechaReserva.Substring(1);
+                }
+                else
+                {
+                    response.FechaAlquiler.Substring(10);
+                    response.FechaDevolucion.Substring(10);
+                }
+                
+            }
+            return alquileres;
         }
 
         public List<Alquiler> GetReserva(int clienteid, string isbn)

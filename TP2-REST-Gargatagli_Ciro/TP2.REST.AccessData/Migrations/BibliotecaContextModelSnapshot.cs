@@ -82,6 +82,16 @@ namespace TP2.REST.AccessData.Migrations
                     b.HasKey("ClienteId");
 
                     b.ToTable("Cliente");
+
+                    b.HasData(
+                        new
+                        {
+                            ClienteId = 1,
+                            Apellido = "Gargatagli",
+                            DNI = "40394722",
+                            Email = "ciroshaila@gmail.com",
+                            Nombre = "Ciro"
+                        });
                 });
 
             modelBuilder.Entity("TP2.REST.Domain.Entities.EstadoAlquiler", b =>
@@ -136,7 +146,7 @@ namespace TP2.REST.AccessData.Migrations
 
                     b.Property<string>("Imagen")
                         .IsRequired()
-                        .HasColumnType("varchar(45)");
+                        .HasColumnType("varchar(110)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -156,7 +166,7 @@ namespace TP2.REST.AccessData.Migrations
                             Autor = "J.K. Rowling",
                             Edicion = "1997",
                             Editorial = "Salamandra",
-                            Imagen = "",
+                            Imagen = "https://images.cdn2.buscalibre.com/fit-in/360x360/a2/9e/a29ebbd39810f964999f2a9f5f773af8.jpg",
                             Stock = 10,
                             Titulo = "Harry Potter y la piedra filosofal"
                         },
@@ -166,7 +176,7 @@ namespace TP2.REST.AccessData.Migrations
                             Autor = "Stephen Chbosky",
                             Edicion = "2013",
                             Editorial = "Alfaguara",
-                            Imagen = "",
+                            Imagen = "https://images-na.ssl-images-amazon.com/images/I/514XOeteoRL._SX319_BO1,204,203,200_.jpg",
                             Stock = 7,
                             Titulo = "Las ventajas de ser invisible"
                         },
@@ -176,7 +186,7 @@ namespace TP2.REST.AccessData.Migrations
                             Autor = "Eduardo Galeano",
                             Edicion = "2014",
                             Editorial = "SIGLO XXI EDITORES",
-                            Imagen = "",
+                            Imagen = "https://contentv2.tap-commerce.com/cover/large/9789876295116_1.jpg?id_com=1113",
                             Stock = 9,
                             Titulo = "Las Venas Abiertas De America Latina"
                         },
@@ -186,7 +196,7 @@ namespace TP2.REST.AccessData.Migrations
                             Autor = "Joe Padilla",
                             Edicion = "2017",
                             Editorial = "RESERVOIR BOOKS",
-                            Imagen = "",
+                            Imagen = "https://www.isadoralibros.com.uy/sitio/repo/img/9788417125011.jpg",
                             Stock = 15,
                             Titulo = "Ramones"
                         },
@@ -196,7 +206,7 @@ namespace TP2.REST.AccessData.Migrations
                             Autor = "Sebastián Duarte",
                             Edicion = "2016",
                             Editorial = "Sebastián Duarte, Sr",
-                            Imagen = "",
+                            Imagen = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTuZGW7GD3BU0e-JZs2CocWnq28bBt3qS8Rtw&usqp=CAU",
                             Stock = 10,
                             Titulo = "Ricky de Flema, El último Punk"
                         },
@@ -206,7 +216,7 @@ namespace TP2.REST.AccessData.Migrations
                             Autor = "Roberto Arlt",
                             Edicion = "2016",
                             Editorial = "EDITORIAL BARENHAUS",
-                            Imagen = "",
+                            Imagen = "https://image.isu.pub/181210203225-bdf0823d1bf285c49563674ba22812f3/jpg/page_1.jpg",
                             Stock = 6,
                             Titulo = "El Juguete Rabioso"
                         },
@@ -216,7 +226,7 @@ namespace TP2.REST.AccessData.Migrations
                             Autor = "Piotr Kropotkin",
                             Edicion = "2017",
                             Editorial = "PENGUIN CLASICOS",
-                            Imagen = "",
+                            Imagen = "https://images-na.ssl-images-amazon.com/images/I/31XJ19CQG1L._SX311_BO1,204,203,200_.jpg",
                             Stock = 13,
                             Titulo = "La conquista del pan"
                         });

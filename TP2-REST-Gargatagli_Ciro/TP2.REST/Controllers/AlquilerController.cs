@@ -1,4 +1,6 @@
 ﻿using Castle.Core.Internal;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using TP2.REST.Domain.DTO;

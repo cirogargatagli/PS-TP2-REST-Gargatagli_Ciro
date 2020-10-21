@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TP2.REST.AccessData.Migrations
 {
-    public partial class CreateApi_RestDB : Migration
+    public partial class CreateBibliotecaDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,7 +46,7 @@ namespace TP2.REST.AccessData.Migrations
                     Editorial = table.Column<string>(type: "varchar(45)", nullable: false),
                     Edicion = table.Column<string>(type: "varchar(45)", nullable: false),
                     Stock = table.Column<int>(nullable: false),
-                    Imagen = table.Column<string>(type: "varchar(45)", nullable: false)
+                    Imagen = table.Column<string>(type: "varchar(110)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,6 +90,11 @@ namespace TP2.REST.AccessData.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Cliente",
+                columns: new[] { "ClienteId", "Apellido", "DNI", "Email", "Nombre" },
+                values: new object[] { 1, "Gargatagli", "40394722", "ciroshaila@gmail.com", "Ciro" });
+
+            migrationBuilder.InsertData(
                 table: "EstadoAlquiler",
                 columns: new[] { "EstadoAlquilerId", "Descripcion" },
                 values: new object[,]
@@ -104,13 +109,13 @@ namespace TP2.REST.AccessData.Migrations
                 columns: new[] { "ISBN", "Autor", "Edicion", "Editorial", "Imagen", "Stock", "Titulo" },
                 values: new object[,]
                 {
-                    { "8478884459", "J.K. Rowling", "1997", "Salamandra", "", 10, "Harry Potter y la piedra filosofal" },
-                    { "6071121639", "Stephen Chbosky", "2013", "Alfaguara", "", 7, "Las ventajas de ser invisible" },
-                    { "9789876295116", "Eduardo Galeano", "2014", "SIGLO XXI EDITORES", "", 9, "Las Venas Abiertas De America Latina" },
-                    { "9788416709823", "Joe Padilla", "2017", "RESERVOIR BOOKS", "", 15, "Ramones" },
-                    { "9789872813635", "Sebastián Duarte", "2016", "Sebastián Duarte, Sr", "", 10, "Ricky de Flema, El último Punk" },
-                    { "9789874109019", "Roberto Arlt", "2016", "EDITORIAL BARENHAUS", "", 6, "El Juguete Rabioso" },
-                    { "9788491053538", "Piotr Kropotkin", "2017", "PENGUIN CLASICOS", "", 13, "La conquista del pan" }
+                    { "8478884459", "J.K. Rowling", "1997", "Salamandra", "https://images.cdn2.buscalibre.com/fit-in/360x360/a2/9e/a29ebbd39810f964999f2a9f5f773af8.jpg", 10, "Harry Potter y la piedra filosofal" },
+                    { "6071121639", "Stephen Chbosky", "2013", "Alfaguara", "https://images-na.ssl-images-amazon.com/images/I/514XOeteoRL._SX319_BO1,204,203,200_.jpg", 7, "Las ventajas de ser invisible" },
+                    { "9789876295116", "Eduardo Galeano", "2014", "SIGLO XXI EDITORES", "https://contentv2.tap-commerce.com/cover/large/9789876295116_1.jpg?id_com=1113", 9, "Las Venas Abiertas De America Latina" },
+                    { "9788416709823", "Joe Padilla", "2017", "RESERVOIR BOOKS", "https://www.isadoralibros.com.uy/sitio/repo/img/9788417125011.jpg", 15, "Ramones" },
+                    { "9789872813635", "Sebastián Duarte", "2016", "Sebastián Duarte, Sr", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTuZGW7GD3BU0e-JZs2CocWnq28bBt3qS8Rtw&usqp=CAU", 10, "Ricky de Flema, El último Punk" },
+                    { "9789874109019", "Roberto Arlt", "2016", "EDITORIAL BARENHAUS", "https://image.isu.pub/181210203225-bdf0823d1bf285c49563674ba22812f3/jpg/page_1.jpg", 6, "El Juguete Rabioso" },
+                    { "9788491053538", "Piotr Kropotkin", "2017", "PENGUIN CLASICOS", "https://images-na.ssl-images-amazon.com/images/I/31XJ19CQG1L._SX311_BO1,204,203,200_.jpg", 13, "La conquista del pan" }
                 });
 
             migrationBuilder.CreateIndex(

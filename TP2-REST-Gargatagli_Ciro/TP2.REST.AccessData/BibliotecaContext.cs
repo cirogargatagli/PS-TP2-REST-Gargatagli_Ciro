@@ -33,7 +33,7 @@ namespace TP2.REST.AccessData
                     Editorial = "Salamandra",
                     Edicion = "1997",
                     Stock = 10,
-                    Imagen = ""
+                    Imagen = "https://images.cdn2.buscalibre.com/fit-in/360x360/a2/9e/a29ebbd39810f964999f2a9f5f773af8.jpg"
                 });
                 entity.HasData(new Libro
                 {
@@ -43,7 +43,7 @@ namespace TP2.REST.AccessData
                     Editorial = "Alfaguara",
                     Edicion = "2013",
                     Stock = 7,
-                    Imagen = ""
+                    Imagen = "https://images-na.ssl-images-amazon.com/images/I/514XOeteoRL._SX319_BO1,204,203,200_.jpg"
                 });
                 entity.HasData(new Libro
                 {
@@ -53,7 +53,7 @@ namespace TP2.REST.AccessData
                     Editorial = "SIGLO XXI EDITORES",
                     Edicion = "2014",
                     Stock = 9,
-                    Imagen = ""
+                    Imagen = "https://contentv2.tap-commerce.com/cover/large/9789876295116_1.jpg?id_com=1113"
                 });
                 entity.HasData(new Libro
                 {
@@ -63,7 +63,7 @@ namespace TP2.REST.AccessData
                     Editorial = "RESERVOIR BOOKS",
                     Edicion = "2017",
                     Stock = 15,
-                    Imagen = ""
+                    Imagen = "https://www.isadoralibros.com.uy/sitio/repo/img/9788417125011.jpg"
                 });
                 entity.HasData(new Libro
                 {
@@ -73,7 +73,7 @@ namespace TP2.REST.AccessData
                     Editorial = "Sebastián Duarte, Sr",
                     Edicion = "2016",
                     Stock = 10,
-                    Imagen = ""
+                    Imagen = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTuZGW7GD3BU0e-JZs2CocWnq28bBt3qS8Rtw&usqp=CAU"
                 });
                 entity.HasData(new Libro
                 {
@@ -83,7 +83,7 @@ namespace TP2.REST.AccessData
                     Editorial = "EDITORIAL BARENHAUS",
                     Edicion = "2016",
                     Stock = 6,
-                    Imagen = ""
+                    Imagen = "https://image.isu.pub/181210203225-bdf0823d1bf285c49563674ba22812f3/jpg/page_1.jpg"
                 });
                 entity.HasData(new Libro
                 {
@@ -93,7 +93,7 @@ namespace TP2.REST.AccessData
                     Editorial = "PENGUIN CLASICOS",
                     Edicion = "2017",
                     Stock = 13,
-                    Imagen = ""
+                    Imagen = "https://images-na.ssl-images-amazon.com/images/I/31XJ19CQG1L._SX311_BO1,204,203,200_.jpg"
                 });
             });
 
@@ -104,6 +104,19 @@ namespace TP2.REST.AccessData
                 entity.HasData(new EstadoAlquiler { EstadoAlquilerId = 1, Descripcion = "Reservado" });
                 entity.HasData(new EstadoAlquiler { EstadoAlquilerId = 2, Descripcion = "Alquilado" });
                 entity.HasData(new EstadoAlquiler { EstadoAlquilerId = 3, Descripcion = "Cancelado" });
+            });
+
+            modelBuilder.Entity<Cliente>(entity =>
+            {
+                entity.ToTable("Cliente");
+                entity.HasData(new Cliente
+                {
+                    ClienteId = 1,
+                    Nombre = "Ciro",
+                    Apellido = "Gargatagli",
+                    DNI = "40394722",
+                    Email = "ciroshaila@gmail.com"
+                });
             });
         }
     }

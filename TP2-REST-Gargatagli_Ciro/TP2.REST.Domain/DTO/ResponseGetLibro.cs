@@ -14,5 +14,7 @@ namespace TP2.REST.Domain.DTO
         public string Edicion { get; set; }
 
         public int Stock { get; set; }
+
+        public string Imagen { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace TP2.REST.Domain.Entities
         public int Stock { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar(45)")]
+        [Column(TypeName = "varchar(110)")]
         public string Imagen { get; set; }
     }
 }

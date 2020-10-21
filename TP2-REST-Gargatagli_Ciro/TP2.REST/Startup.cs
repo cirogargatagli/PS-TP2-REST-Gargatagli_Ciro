@@ -49,6 +49,14 @@ namespace TP2.REST
                 s.SwaggerDoc("v1", new OpenApiInfo { Title = "REST", Version = "v1" });
             });
 
+            //CORS
+            services.AddCors(c => {
+                c.AddPolicy("AllowOrigin", options => options
+                                                            .AllowAnyOrigin()
+                                                            .AllowAnyMethod()
+                                                            .AllowAnyHeader());
+            });
+
 
             services.AddTransient<IGenericRepository, GenericsRepository>();
             services.AddTransient<IClienteService, ClienteService>();
@@ -71,6 +79,14 @@ namespace TP2.REST
 
             app.UseRouting();
 
+            //Indicamos a la app utilizar Cors
+            app.UseCors(options =>
+            {
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+                options.AllowAnyOrigin();
+            });
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -88,6 +104,8 @@ namespace TP2.REST
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "REST V1");
                 s.RoutePrefix = string.Empty;
             });
+
+            
         }
     }
 }
